@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+
+    php:
+        image: siapep/php-for-symfony-6
+        hostname: php
+        volumes:
+            - ../:/var/www/symfony
+        networks:
+            - symfony_app
+        env_file:
+            - .env.php.local
+
+    nginx:
+        image: siapep/nginx-for-symfony-6
+        volumes:
+            - ../:/var/www/symfony
+        ports:
+            - 8080:80
+        networks:
+            - symfony_app
+        env_file:
+            - .env.nginx.local
+
+volumes:
+    db_app:
+
+networks:
+    symfony_app:

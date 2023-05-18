@@ -1,0 +1,28 @@
+name: PHP Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - php/**    
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - php/**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Docker build and push
+      uses: cloudposse/github-action-docker-build-push@1.11.0
+      with:
+        workdir: './php'
+        file: 'Dockerfile' # optional, default is Dockerfile
+        organization: 'siapep'
+        repository: 'php-for-symfony-6'
+        registry: 'registry.docker.com'
+        login: ${{ secrets.DOCKER_USERNAME }} 
+        password: ${{ secrets.DOCKER_PASSWORD }}
