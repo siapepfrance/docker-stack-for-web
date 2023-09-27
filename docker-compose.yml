@@ -23,6 +23,16 @@ services:
         env_file:
             - .env.nginx.local
 
+    php_sf3:
+        image: siapep/php-for-symfony-3
+        hostname: php
+        volumes:
+            - ../:/var/www/symfony
+        networks:
+            - symfony_app
+        env_file:
+            - .env.php.local
+
 volumes:
     db_app:
 

@@ -22,7 +22,13 @@ Pour ajouter d'autres projets Symfony 6 dans votre infrastructure, il faut :
 
 Une image php dédiée est disponible dans le dossier [PHP](./php)
 
-Celle-ci peut être ajoutée à vos projets en utilisant l'image => siapep/php-for-symfony-6
+Celle-ci peut être ajoutée à vos projets compatibles symfony 6 ou php 8+ en utilisant l'image => siapep/php-for-symfony-6
+
+#### PHP 7.3 (projets php legacy)
+
+Une image php dédiée est disponible dans le dossier [PHP-73](./php-73)
+
+Celle-ci peut être ajoutée à vos projets compatibles symfony 3 ou php 7+ en utilisant l'image => siapep/php-for-symfony-3
 
 #### NGINX 1.21
 
