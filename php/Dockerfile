@@ -1,5 +1,5 @@
 FROM php:8.2-fpm-buster
-ARG TIMEZONE=Europe/France
+ARG TIMEZONE=Europe/Paris
 
 COPY php.ini /usr/local/etc/php/conf.d/docker-php-config.ini
 

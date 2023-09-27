@@ -19,7 +19,7 @@ jobs:
     - name: Docker build and push
       uses: cloudposse/github-action-docker-build-push@1.11.0
       with:
-        workdir: './php'
+        workdir: './php-73'
         file: 'Dockerfile' # optional, default is Dockerfile
         organization: 'siapep'
         repository: 'php-for-symfony-3'

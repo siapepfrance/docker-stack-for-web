@@ -1,30 +1,15 @@
-FROM ubuntu:18.04
-ARG TIMEZONE=Europe/France
-ARG DEBIAN_FRONTEND=noninteractive
+FROM php:7.3-fpm-alpine
+ARG TIMEZONE=Europe/Paris
 
-COPY php.ini /etc/php/7.3/fpm/php.ini
-ADD conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
-ADD conf/php-fpm.conf /etc/php/7.3/fpm/php-fpm.conf
+COPY init.sh /
+COPY php.ini /usr/local/etc/php/conf.d/docker-php-config.ini
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common && DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:ondrej/php && DEBIAN_FRONTEND=noninteractive apt-get install -my \
-  curl \
-  wget \
-  php7.3-curl \
-  php7.3-fpm \
-  php7.3-gd \
-  php7.3-xsl \
-  php7.3-mysqlnd \
-  php7.3-cli \
-  php7.3-intl \
-  php7.3-bz2 \
-  php7.3-zip \
-  php7.3-mbstring \
-  git \
-  zip \
-  php7.3-apcu \
-  php7.3-redis \
-  php7.3-opcache \
-  php7.3-soap
+RUN apk update \
+    && apk add bash git openssh ca-certificates wget freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev postgresql-dev libxml2-dev \
+    && docker-php-ext-install gd pdo pdo_mysql pdo_pgsql pgsql xml soap \
+    && rm /var/cache/apk/* \
+    && echo 'alias sf="php bin/console"' >> ~/.bashrc
+
 RUN mkdir /run/php
 
 # Set timezone
@@ -35,3 +20,5 @@ RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} >
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 WORKDIR /var/www/symfony
+RUN chmod +x /init.sh
+CMD /init.sh
