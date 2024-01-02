@@ -1,14 +1,14 @@
-name: Nginx Docker Image CI
+name: PHP 8.2 Docker Image CI
 
 on:
   push:
     branches: [ "main" ]
     paths:
-      - nginx/**    
+      - php-82/**    
   pull_request:
     branches: [ "main" ]
     paths:
-      - nginx/**
+      - php-82/**
 
 jobs:
   build:
@@ -19,10 +19,10 @@ jobs:
     - name: Docker build and push
       uses: cloudposse/github-action-docker-build-push@1.11.0
       with:
-        workdir: './nginx'
+        workdir: './php-82'
         file: 'Dockerfile' # optional, default is Dockerfile
         organization: 'siapep'
-        repository: 'nginx-for-symfony-6'
+        repository: 'php-82'
         registry: 'registry.docker.com'
         login: ${{ secrets.DOCKER_USERNAME }} 
         password: ${{ secrets.DOCKER_PASSWORD }}

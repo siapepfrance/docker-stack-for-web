@@ -1,63 +1,43 @@
-# Stack docker pour Symfony 6
+# Stack docker pour projets webs (supporte Symfony, php et les spa)
 
 #### Docker Compose
 
-Le fichier docker-compose.yml contient un exemple d'infrastructure as code
+Le fichier docker-compose.yml une infrastructure as code contenant des exemples
 
-pour le déploiement d'un projet Symfony 6 avec les deux images php et nginx.
+pour le déploiement de projets Symfony 3 à 6, php 7, php 8 et une spa.
 
 - - - - - - - - - - - - - - - - - - - - - -
 
-Pour ajouter d'autres projets Symfony 6 dans votre infrastructure, il faut :
+Pour ajouter un projet dans votre infrastructure réelle, il faut :
 
--> 1 - Dupliquer les services php et nginx.
+-> 1 - Dupliquer les services que vous souhaites
 
--> 2 - Modifier le volume des services dupliqués afin qu'ils pointent vers le nouveau projet.
+-> 2 - Modifier le volume des services dupliqués afin qu'ils pointent vers le bon projet.
 
--> 3 - Modifier le port du service nginx dupliqué.
+-> 3 - Modifier le port des service dupliqués.
 
--> 4 - S'il le faut ajuster les variables d'envuronnement se trouvant dans les fichiers .env.php.local, .env.nginx.local.
+-> 4 - S'il le faut ajuster les variables d'envuronnement se trouvant dans les fichiers .env.php.local, .env.nginx-*.local.
 
 #### PHP 8.2
 
-Une image php dédiée est disponible dans le dossier [PHP](./php)
+Une image php dédiée est disponible dans le dossier [php-82](./php-82)
 
-Celle-ci peut être ajoutée à vos projets compatibles symfony 6 ou php 8+ en utilisant l'image => siapep/php-for-symfony-6
+Celle-ci peut être ajoutée à vos projets compatibles symfony 4+ ou php 8+ en utilisant l'image => siapep/php-82
 
 #### PHP 7.3 (projets php legacy)
 
-Une image php dédiée est disponible dans le dossier [PHP-73](./php-73)
+Une image php dédiée est disponible dans le dossier [php-73](./php-73)
 
-Celle-ci peut être ajoutée à vos projets compatibles symfony 3 ou php 7+ en utilisant l'image => siapep/php-for-symfony-3
+Celle-ci peut être ajoutée à vos projets compatibles symfony 3 ou php 7+ en utilisant l'image => siapep/php-73
 
-#### NGINX 1.21
+#### NGINX 1.21 pour php
 
-Une image php dédiée est disponible dans le dossier [NGINX](./nginx)
+Une image nginx dédiée aux applications php est disponible dans le dossier [nginx-php](./nginx-php)
 
-Celle-ci peut être ajoutée à vos projets en utilisant l'image => siapep/nginx-for-symfony-6
+Celle-ci peut être ajoutée à vos projets en utilisant l'image => siapep/nginx-php
 
-#### Extra : base de données
+#### NGINX 1.21 pour les spa
 
-Si vous souhaitez connecter une base de données à votre projet Symfony,
+Une image nginx dédiée aux single page applications est disponible dans le dossier [nginx-spa](./nginx-spa)
 
-plusieurs solutions s'offrent à vous :
-
--> Connecter une base de donnée se trouvant sur la machine hôte à votre conteneur.
-
-Dans ce cas, il suffit dans le fichier .env ou .env.local de votre projet Symfony
-
-et renseigner mysql://root:@host.docker.internal:3306 au lieu de mysql://root:@127.0.0.1:3306 dans la variable DATABASE_URL.
-
-
--> Connecter une base de données distante. Pour cela il suffit de rebseigner les 
-
-informations classiques de votre base de données.
-
-
--> Connecter une base de donnée conteneurisée. Pour cela il vous suffit d'ajouter 
-
-l'image de votre base de données dans le fichier docker-compose.yml et de connecter
-
-votre conteneur php au conteneur de la base de données en paramétrant un réseau 
-
-commun pour les deux services.
+Celle-ci peut être ajoutée à vos projets en utilisant l'image => siapep/nginx-spa
