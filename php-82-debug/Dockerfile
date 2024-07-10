@@ -18,7 +18,8 @@ RUN apt-get update && apt-get install -y \
     libicu-dev  \
     libonig-dev \
     libxslt1-dev \
-    acl
+    acl \
+    librdkafka-dev
 
 RUN docker-php-ext-configure gd --with-jpeg --with-freetype 
 
@@ -27,7 +28,9 @@ RUN docker-php-ext-install \
 
 RUN pecl install -o -f xdebug
 
-RUN docker-php-ext-enable xdebug
+RUN pecl install -o -f rdkafka
+
+RUN docker-php-ext-enable xdebug rdkafka
 
 # Set timezone
 RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} > /etc/timezone \
