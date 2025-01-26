@@ -18,6 +18,12 @@ Pour ajouter un projet dans votre infrastructure réelle, il faut :
 
 -> 4 - S'il le faut ajuster les variables d'envuronnement se trouvant dans les fichiers .env.php.local, .env.nginx-*.local.
 
+#### PHP 8.4
+
+Une image php dédiée est disponible dans le dossier [php-84](./php-84)
+
+Celle-ci peut être ajoutée à vos projets compatibles symfony 7+ ou php 8.4+ en utilisant l'image => siapep/php-84
+
 #### PHP 8.2
 
 Une image php dédiée est disponible dans le dossier [php-82](./php-82)

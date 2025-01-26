@@ -1,23 +1,23 @@
-FROM php:8.2-fpm-buster
+FROM php:8.4-fpm-alpine
 ARG TIMEZONE=Europe/Paris
 
 COPY php.ini /usr/local/etc/php/conf.d/docker-php-config.ini
 
-RUN apt-get update && apt-get install -y \
+RUN apk update && apk add --no-cache \
     gnupg \
     g++ \
     procps \
     openssl \
     git \
     unzip \
-    zlib1g-dev \
+    zlib-dev \
     libzip-dev \
-    libfreetype6-dev \
+    freetype-dev \
     libpng-dev \
-    libjpeg-dev \
-    libicu-dev  \
-    libonig-dev \
-    libxslt1-dev \
+    libjpeg-turbo-dev \
+    icu-dev  \
+    oniguruma-dev \
+    libxslt-dev \
     acl
 
 RUN docker-php-ext-configure gd --with-jpeg --with-freetype 

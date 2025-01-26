@@ -1,29 +1,42 @@
-FROM php:8.2-fpm-buster
+FROM php:8.4-fpm-alpine
 ARG TIMEZONE=Europe/Paris
 
 COPY php.ini /usr/local/etc/php/conf.d/docker-php-config.ini
 
-RUN apt-get update && apt-get install -y \
+RUN apk update && apk add --no-cache \
     gnupg \
     g++ \
     procps \
     openssl \
     git \
     unzip \
-    zlib1g-dev \
+    zlib-dev \
     libzip-dev \
-    libfreetype6-dev \
+    freetype-dev \
     libpng-dev \
-    libjpeg-dev \
-    libicu-dev  \
-    libonig-dev \
-    libxslt1-dev \
-    acl
+    libjpeg-turbo-dev \
+    icu-dev  \
+    oniguruma-dev \
+    libxslt-dev \
+    acl \
+    linux-headers
 
 RUN docker-php-ext-configure gd --with-jpeg --with-freetype 
 
+RUN curl -fsSL https://xdebug.org/files/xdebug-3.4.1.tgz -o xdebug.tgz \
+    && tar -xzf xdebug.tgz \
+    && cd xdebug-3.4.1 \
+    && phpize \
+    && ./configure --enable-xdebug \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf xdebug.tgz xdebug-3.4.1
+
 RUN docker-php-ext-install \
     pdo pdo_mysql zip xsl gd intl opcache exif mbstring
+
+RUN docker-php-ext-enable xdebug
 
 # Set timezone
 RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} > /etc/timezone \

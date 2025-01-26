@@ -2,6 +2,27 @@ version: "3.1"
 
 services:
 
+    # Symfony 7
+    nginx_symfony_7:
+        image: siapep/nginx-php
+        volumes:
+            - ./symfony_7:/var/www/app
+        ports:
+            - 8087:80
+        networks:
+            - symfony_7_app
+        env_file:
+            - .env.nginx-php-symfony4.local
+    
+    php_symfony_7:
+        image: siapep/php-84
+        volumes:
+            - ./symfony_7:/var/www/app
+        networks:
+            - symfony_7_app
+        env_file:
+            - .env.php.local
+
     # Symfony 6
     nginx_symfony_6:
         image: siapep/nginx-php
@@ -139,6 +160,7 @@ services:
             - .env.nginx-spa-app.local
 
 networks:
+    symfony_7_app:
     symfony_6_app:
     symfony_5_app:
     symfony_4_app:
