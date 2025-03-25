@@ -128,24 +128,45 @@ services:
         env_file:
             - .env.php.local
 
-    # PHP 7 APP with root file index.php
-    nginx_php_7_app:
+    # PHP 7.3 APP with root file index.php
+    nginx_php_7_3_app:
         image: siapep/nginx-php
         volumes:
-            - ./php7:/var/www/app
+            - ./php73:/var/www/app
         ports:
             - 8085:80
         networks:
-            - php_7_app
+            - php_7_3_app
         env_file:
             - .env.nginx-php-app.local
     
-    php_php_7_app:
+    php_php_7_3_app:
         image: siapep/php-73
         volumes:
-            - ./php7:/var/www/app
+            - ./php73:/var/www/app
         networks:
-            - php_7_app
+            - php_7_3_app
+        env_file:
+            - .env.php.local
+
+    # PHP 7.4 APP with root file index.php
+    nginx_php_7_4_app:
+        image: siapep/nginx-php
+        volumes:
+            - ./php74:/var/www/app
+        ports:
+            - 8087:80
+        networks:
+            - php_7_4_app
+        env_file:
+            - .env.nginx-php-app.local
+    
+    php_php_7_4_app:
+        image: siapep/php-74
+        volumes:
+            - ./php74:/var/www/app
+        networks:
+            - php_7_4_app
         env_file:
             - .env.php.local
 
@@ -166,4 +187,5 @@ networks:
     symfony_4_app:
     symfony_3_app:
     php_8_app:
-    php_7_app:
+    php_7_3_app:
+    php_7_4_app:
